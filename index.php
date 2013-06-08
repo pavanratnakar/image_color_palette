@@ -2,7 +2,8 @@
 require_once('includes/colorsofimage.class.php');
 require_once("lib/phpFlickr/phpFlickr.php");
 $f = new phpFlickr("12da91e2fe62e022791c958fdc4ef82c");
-$f->enableCache("fs", "/home/pavanrat/public_html/hacks/color-palette-picker/cache");
+//$f->enableCache("fs", "/home/pavanrat/public_html/hacks/color-palette-picker/cache/");
+$f->enableCache("db", "mysql://pavanrat_pavan:28pepsy1998@localhost/pavanrat_main");
 ?>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -42,7 +43,7 @@ $f->enableCache("fs", "/home/pavanrat/public_html/hacks/color-palette-picker/cac
                     // Search for most interesting photos of today
                     $photos_interesting = $f->interestingness_getList(NULL, NULL, NULL, 9, 1);
                     foreach ((array)$photos_interesting['photos']['photo'] as $photo) {
-                        $src = $f->buildPhotoURL($photo, "medium_640");
+                        $src = $f->buildPhotoURL($photo, "medium");
                         $colors_of_image = new ColorsOfImage($src);
                         $colors = $colors_of_image->getProminentColors();
                         $background_color = $colors_of_image->getBackgroundColor();
@@ -79,5 +80,17 @@ $f->enableCache("fs", "/home/pavanrat/public_html/hacks/color-palette-picker/cac
         </div>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
         <script src="js/main.js"></script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22528464-1']);
+          _gaq.push(['_setDomainName', 'pavanratnakar.com']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
     </body>
 </html>
